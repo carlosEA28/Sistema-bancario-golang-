@@ -2,13 +2,20 @@ package user
 
 import (
 	"fmt"
+	"log"
 )
 
 type User struct {
 	Name     string
 	Address  string
 	Password string
+	Balance  float64
 }
+
+func (u User) Depositar()             {}
+func (u User) Sacar()                 {}
+func (u User) VerSaldo()              {}
+func (u User) Transferir(qtd float64) {}
 
 var contas []User
 
@@ -26,8 +33,7 @@ func UserMenu() {
 		case 1:
 			CriarConta()
 		case 2:
-
-			fmt.Println("Funcionalidade de login ainda não implementada.")
+			loginUser()
 		case 3:
 			fmt.Println("Obrigado pela preferência!")
 			return
@@ -35,6 +41,10 @@ func UserMenu() {
 			fmt.Println("Opção inválida, tente novamente.")
 		}
 	}
+}
+
+func LogedUserMenu() {
+	fmt.Println("OI")
 }
 
 func CriarConta() {
@@ -62,4 +72,31 @@ func CriarConta() {
 
 	fmt.Println("Conta criada com sucesso! Seu ID é:", len(contas)-1)
 	fmt.Println("<---------------->")
+}
+
+func loginUser() {
+
+	var idBusca int
+	var nome, password string
+
+	fmt.Println("Digite seu id: ")
+	fmt.Scan(&idBusca)
+
+	fmt.Println("Digite seu nome: ")
+	fmt.Scan(&nome)
+
+	fmt.Println("Digite sua senha: ")
+	fmt.Scan(&password)
+
+	for id := range contas {
+
+		if contas[id].Name == nome && contas[id].Password == password {
+			fmt.Println("Login feito com sucesso")
+			LogedUserMenu()
+		} else {
+			log.Fatal("Nome ou senha inválidos!")
+		}
+
+	}
+
 }
